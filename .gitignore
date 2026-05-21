@@ -5,6 +5,7 @@
 *.esco
 *.bin
 *.nb
-XIP
+XIP/
 target/
-
+.zig-cache/
+zig-out/

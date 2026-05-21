@@ -1,17 +1,12 @@
 @echo off
-mkdir bin 2>nul
-cargo build --release
-if errorlevel 1 goto error
+zig build -Doptimize=ReleaseFast
+if %errorlevel% neq 0 (
+    echo Build failed!
+    exit /b %errorlevel%
+)
 
-copy /Y target\release\wmnkextract.exe bin\wmnkextract.exe
-if errorlevel 1 goto error
-
-copy /Y target\release\wmpartinfo.exe bin\wmpartinfo.exe
-if errorlevel 1 goto error
+if not exist bin mkdir bin
+copy /y zig-out\bin\wmpartinfo.exe bin\wmpartinfo.exe
+copy /y zig-out\bin\wmnkextract.exe bin\wmnkextract.exe
 
 echo Build successful! Binaries placed in bin/
-exit /b 0
-
-:error
-echo Build failed!
-exit /b 1
